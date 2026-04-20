@@ -69,7 +69,7 @@ func fetchAllReleases(user, repo string) ([]ghRelease, error) {
 
 			RateLimit rateLimit
 		}
-		variables := map[string]interface{}{
+		variables := map[string]any{
 			"repositoryOwner": githubv4.String(user),
 			"repositoryName":  githubv4.String(repo),
 			"releasesCursor":  (*githubv4.String)(nil), // Null after argument to get first page.
@@ -141,7 +141,7 @@ func fetchRelease(user, repo, tag string) (*ghRelease, error) {
 
 		RateLimit rateLimit
 	}
-	variables := map[string]interface{}{
+	variables := map[string]any{
 		"repositoryOwner": githubv4.String(user),
 		"repositoryName":  githubv4.String(repo),
 		"tagName":         githubv4.String(tag), // Null after argument to get first page.

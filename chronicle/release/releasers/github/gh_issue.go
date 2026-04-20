@@ -3,6 +3,7 @@ package github
 import (
 	"context"
 	"os"
+	"slices"
 	"strings"
 	"time"
 
@@ -91,10 +92,8 @@ func issuesBefore(since time.Time) issueFilter {
 func issuesWithLabel(labels ...string) issueFilter {
 	return func(issue ghIssue) bool {
 		for _, targetLabel := range labels {
-			for _, l := range issue.Labels {
-				if l == targetLabel {
-					return true
-				}
+			if slices.Contains(issue.Labels, targetLabel) {
+				return true
 			}
 		}
 
@@ -212,7 +211,7 @@ func fetchClosedIssues(user, repo string, since *time.Time) ([]ghIssue, error) {
 
 			RateLimit rateLimit
 		}
-		variables := map[string]interface{}{
+		variables := map[string]any{
 			"repositoryOwner": githubv4.String(user),
 			"repositoryName":  githubv4.String(repo),
 			"issuesCursor":    (*githubv4.String)(nil), // Null after argument to get first page.

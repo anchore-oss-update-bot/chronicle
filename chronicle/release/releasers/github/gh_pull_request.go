@@ -3,6 +3,7 @@ package github
 import (
 	"context"
 	"os"
+	"slices"
 	"time"
 
 	"github.com/scylladb/go-set/strset"
@@ -149,10 +150,8 @@ func prsWithoutOpenLinkedIssue() prFilter {
 func prsWithLabel(labels ...string) prFilter {
 	return func(pr ghPullRequest) bool {
 		for _, targetLabel := range labels {
-			for _, l := range pr.Labels {
-				if l == targetLabel {
-					return true
-				}
+			if slices.Contains(pr.Labels, targetLabel) {
+				return true
 			}
 		}
 		log.Tracef("PR #%d filtered out: missing required label", pr.Number)
@@ -315,7 +314,7 @@ func fetchMergedPRs(user, repo string, since *time.Time) ([]ghPullRequest, error
 
 			RateLimit rateLimit
 		}
-		variables := map[string]interface{}{
+		variables := map[string]any{
 			"repositoryOwner": githubv4.String(user),
 			"repositoryName":  githubv4.String(repo),
 			"prCursor":        (*githubv4.String)(nil), // Null after argument to get first page.

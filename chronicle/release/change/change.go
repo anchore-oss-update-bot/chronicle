@@ -16,7 +16,7 @@ type Change struct {
 	Timestamp   time.Time   // the timestamp best representing when the change was committed to the VCS baseline (e.g. GitHub PR merged).
 	References  []Reference // any URLs that relate to the change
 	EntryType   string      // a free-form helper string that indicates where the change came from (e.g. a "github-issue"). This can be useful for parsing the `Entry` field.
-	Entry       interface{} // the original data entry from the source that represents the change. The `EntryType` field should be used to help indicate how the shape should be interpreted.
+	Entry       any         // the original data entry from the source that represents the change. The `EntryType` field should be used to help indicate how the shape should be interpreted.
 }
 
 // Reference indicates where you can find additional information about a particular change.
