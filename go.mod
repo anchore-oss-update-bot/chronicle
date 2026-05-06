@@ -3,8 +3,8 @@ module github.com/anchore/chronicle
 go 1.25.0
 
 require (
-	github.com/anchore/clio v0.0.0-20260402185550-53bd6cfe83ad
-	github.com/anchore/go-logger v0.0.0-20250318195838-07ae343dd722
+	github.com/anchore/clio v0.1.0
+	github.com/anchore/go-logger v0.1.0
 	github.com/coreos/go-semver v0.3.1
 	github.com/gkampitakis/go-snaps v0.5.21
 	github.com/go-git/go-billy/v5 v5.8.0
